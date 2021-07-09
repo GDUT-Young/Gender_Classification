@@ -10,7 +10,7 @@ file_list = os.listdir("./")                        #file_list为遍历图像文
 rows = 128   #行数
 cols = 128   #列数
 channal = 1  #通道数，灰度图为1
-imgdata = np.empty((1,16384),dtype='uint8') #创建空数组存放图像信息
+imgdata = np.empty((1,16384),dtype='uint8') 
 
 # 遍历图像信息存入imgdata中
 for file_name in file_list:
@@ -27,8 +27,8 @@ img_information = []
 imginfor = []
 wrong = []
 for line in lines:
-    temp1 = line.strip('\n')    # strip()为删除函数；删去空行
-    temp3 = temp1.split('(')    # 以 “（” 分割
+    temp1 = line.strip('\n')    
+    temp3 = temp1.split('(')    
     img_information.append(temp3)
 for i in range(len(img_information)):
     if img_information[i][1].strip() != '_missing descriptor)':
@@ -58,7 +58,7 @@ del img_information[1189-offset]
 del img_information[1193-offset-1]
 print("Successfully Import The Face Label In imginfo!!")
 print("Total face image:%d\nThe number of male:%d\nThe number of female:%d"
-      % (len(imginfor),imginfor.count('male'),imginfor.count('female')))  #类别样本数 2425 1566
+      % (len(imginfor),imginfor.count('male'),imginfor.count('female')))  
 print("===================================================")
 f.close()
 
@@ -66,7 +66,7 @@ X = imgdata          # 图像数据
 Y = imginfor        # 标签
 
 # 特征降维（PCA提取特征）
-n_components = 100   # 降维后的特征维数
+n_components = 100   
 pca = PCA(n_components=n_components)
 newX = pca.fit_transform(X)     #等价于pca.fit(X) pca.transform(X)
 
@@ -118,7 +118,7 @@ for i in range(len(datas)):
 print("The result of prediction")
 print(Yout)
 
-js =0#计数，如果预测结果和真实相等就加1
+js =0     #计数，如果预测结果和真实相等就加1
 for i in range(0, len(Yout)):
     if Yout[i] == Y[i]:
         js += 1
