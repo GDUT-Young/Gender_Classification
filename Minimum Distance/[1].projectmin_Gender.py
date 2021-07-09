@@ -10,7 +10,7 @@ file_list = os.listdir("./")                        #file_list为遍历图像文
 rows = 128   #行数
 cols = 128   #列数
 channal = 1  #通道数，灰度图为1
-imgdata = np.empty((1,16384),dtype='uint8') #创建空数组存放图像信息
+imgdata = np.empty((1,16384),dtype='uint8') 
 
 # 遍历图像信息存入imgdata中
 for file_name in file_list:
@@ -27,8 +27,8 @@ img_information = []
 imginfor = []
 wrong = []
 for line in lines:
-    temp1 = line.strip('\n')    # strip()为删除函数；删去空行
-    temp3 = temp1.split('(')    # 以 “（” 分割
+    temp1 = line.strip('\n')    
+    temp3 = temp1.split('(')    
     img_information.append(temp3)
 for i in range(len(img_information)):
     if img_information[i][1].strip() != '_missing descriptor)':
@@ -66,7 +66,7 @@ X = imgdata          # 图像数据
 Y = imginfor        # 标签
 
 # 特征降维（PCA提取特征）
-n_components = 100   # 降维后的特征维数
+n_components = 100   
 pca = PCA(n_components=n_components)
 newX = pca.fit_transform(X)     #等价于pca.fit(X) pca.transform(X)
 
@@ -134,5 +134,4 @@ print("===================================================")
 # plt.ylabel('Accuracy') # 纵坐标轴的标题
 # plt.legend()
 # plt.title('Training data and Accuracy')
-#
 # plt.show()
