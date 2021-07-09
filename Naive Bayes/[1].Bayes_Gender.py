@@ -9,7 +9,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
 
 os.chdir(r"E:\桌面\大三\模式识别\课程项目\FR\rawdata") #定位到图像文件位置
-file_list = os.listdir("./")                        #file_list为遍历图像文件名称 list类型
+file_list = os.listdir("./")                         #file_list为遍历图像文件名称 list类型
 rows = 128   #行数
 cols = 128   #列数
 channal = 1  #通道数，灰度图为1
@@ -18,7 +18,7 @@ imgdata = np.empty((1,16384),dtype='uint8') #创建空数组存放图像信息
 # 遍历图像信息存入imgdata中
 # imgdata为 3991*16384 维的数组（除去'2416'和'2412'（图像大小存在错误，暂不考虑））
 for file_name in file_list:
-    img = np.fromfile(file_name, dtype='uint8')   #img为numpy.ndarray(数组)类型
+    img = np.fromfile(file_name, dtype='uint8')   
     img = img.reshape(1,16384)
     print(file_name)
     imgdata = np.vstack((imgdata,img))
@@ -48,7 +48,7 @@ for i in range(len(img_information)):
         imginfor.append('missing')
         wrong.append(i)
 # 删除缺失图像信息的信息
-index_offset = 0          #索引的偏移量：因为下面是逐次删除，所以每当前一次删除后，后面的索引响应减一
+index_offset = 0          
 for i in range(len(wrong)):
     a = wrong[i] - index_offset
     del img_information[a]
@@ -58,13 +58,13 @@ offset = 0
 for j in wrong:
     if j < 1189 and j > 0:
         offset += 1
-del imginfor[1189-offset]          # 删除维度错误的图像  1189 smiling;1193 serious
+del imginfor[1189-offset]          
 del imginfor[1193-offset-1]
 del img_information[1189-offset]
 del img_information[1193-offset-1]
 print("Successfully Import The Face Label In imginfo!!")
 print("Total face image:%d\nThe number of male:%d\nThe number of female:%d"
-      % (len(imginfor),imginfor.count('male'),imginfor.count('female')))  #类别样本数 2425 1566
+      % (len(imginfor),imginfor.count('male'),imginfor.count('female'))) 
 print("===================================================")
 f.close()
 
@@ -74,12 +74,12 @@ Y = imginfor         # 标签
 # PCA
 n_component = 100   # 降维后的特征维数
 bayes_PCA = PCA(n_components=n_component, svd_solver='randomized', whiten=True).fit(X)
-x_pca = bayes_PCA.transform(X)       # imgdata_pca为降维后的图像信息，3991 * 200
+x_pca = bayes_PCA.transform(X)       
 y_pca = Y
 print("------Naive Bayes with PCA------")
 print("The size of PCA characteristic matrix:")
 print(x_pca.shape)
-X_train_PCA, X_test_PCA, y_train_PCA, y_test_PCA = train_test_split(x_pca,y_pca, test_size=0.3, random_state=2) # 划分训练集
+X_train_PCA, X_test_PCA, y_train_PCA, y_test_PCA = train_test_split(x_pca,y_pca, test_size=0.3, random_state=2) 
 print("The shape of training and of testing : ")
 print(X_train_PCA.shape, X_test_PCA.shape)
 clf_bayes_pca = GaussianNB()
@@ -136,12 +136,12 @@ print("============================================================")
 
 # Influence of PCA dimension
 acc1 = []
-X = imgdata          # 图像数据
-Y = imginfor        # 标签
+X = imgdata         
+Y = imginfor     
 for i in range(100,1000,100):
-    n_component = i   # 降维后的特征维数
+    n_component = i   
     bayes_PCA = PCA(n_components = n_component, svd_solver='randomized', whiten=True).fit(X)
-    x_pca = bayes_PCA.transform(X)       # imgdata_pca为降维后的图像信息，3991 * 200
+    x_pca = bayes_PCA.transform(X)      
     y_pca = Y
     X_train_PCA, X_test_PCA, y_train_PCA, y_test_PCA = train_test_split(x_pca,y_pca, test_size=0.3, random_state=2) # 划分训练集
     clf_bayes_pca = GaussianNB()
