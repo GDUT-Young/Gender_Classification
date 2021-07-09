@@ -18,7 +18,7 @@ imgdata = np.empty((1,16384),dtype='uint8') #创建空数组存放图像信息
 ##### 遍历图像信息存入imgdata中
 # imgdata为 3991*16384 维的数组（除去'2416'和'2412'（图像大小存在错误，暂不考虑））
 for file_name in file_list:
-    img = np.fromfile(file_name, dtype='uint8')   #img为numpy.ndarray(数组)类型
+    img = np.fromfile(file_name, dtype='uint8')   
     img = img.reshape(1,16384)
     print(file_name)
     imgdata = np.vstack((imgdata,img))
@@ -51,7 +51,7 @@ for i in range(len(img_information)):
         imginfor.append('missing')
         wrong.append(i)
 # 删除缺失图像信息的信息
-index_offset = 0          #索引的偏移量：因为下面是逐次删除，所以每当前一次删除后，后面的索引要相应减一
+index_offset = 0          
 for i in range(len(wrong)):
     a = wrong[i] - index_offset
     del img_information[a]
@@ -61,7 +61,7 @@ offset = 0
 for j in wrong:
     if j < 1189 and j > 0:
         offset += 1
-del imginfor[1189-offset]          # 暂时删除维度错误的图像  1189 smiling;1193 serious
+del imginfor[1189-offset]          
 del imginfor[1193-offset-1]
 del img_information[1189-offset]
 del img_information[1193-offset-1]
@@ -78,7 +78,7 @@ Y = imginfor        # 标签
 #### PCA
 n_component = 100   # 降维后的特征维数
 bayes_PCA = PCA(n_components=n_component, svd_solver='randomized', whiten=True).fit(X)
-x_pca = bayes_PCA.transform(X)       # imgdata_pca为降维后的图像信息，3991 * 200
+x_pca = bayes_PCA.transform(X)       
 y_pca = Y
 print("------Naive Bayes with PCA------")
 print("The size of PCA characteristic matrix:")
@@ -174,7 +174,6 @@ for L,C,M in zip(np.unique(y_train_PCA),colors,markers):
 plt.title('Train Data In Gender-Expression Sample Set')
 plt.xlabel('LD 1')
 plt.ylabel('LD 2')
-# plt.legend(loc='lower right')
 plt.show()
 
 for L,C,M in zip(np.unique(y_train_PCA),colors,markers):
@@ -186,7 +185,6 @@ for L,C,M in zip(np.unique(y_train_PCA),colors,markers):
 plt.title('Test Data In Gender-Expression Sample Set')
 plt.xlabel('LD 1')
 plt.ylabel('LD 2')
-# plt.legend(loc='lower right')
 plt.show()
 
 for L,C,M in zip(np.unique(y_train_PCA),colors,markers):
@@ -198,7 +196,6 @@ for L,C,M in zip(np.unique(y_train_PCA),colors,markers):
 plt.title('Predict Data In Gender-Expression Sample Set')
 plt.xlabel('LD 1')
 plt.ylabel('LD 2')
-# plt.legend(loc='lower right')
 plt.show()
 
 ##### Influence of PCA dimension
